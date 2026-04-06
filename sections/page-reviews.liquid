@@ -1,0 +1,38 @@
+<section style="padding:8rem 0 4rem;text-align:center;">
+  <div class="container">
+    <p style="font-family:var(--font-sans);font-size:0.65rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--glow);margin-bottom:1rem;">— Verified Reviews</p>
+    <h1 style="font-family:var(--font-serif);font-size:clamp(2.5rem,6vw,5rem);color:var(--white);margin-bottom:1.5rem;">Real love. <span style="font-style:italic;color:rgba(209,209,209,0.5);">Real people.</span></h1>
+    <p style="font-family:var(--font-sans);font-size:0.75rem;color:var(--fg-muted);">Based on 3,200+ reviews · 4.9 average</p>
+  </div>
+</section>
+<div class="container">
+  <div style="display:grid;grid-template-columns:1fr;gap:1.5rem;padding-bottom:6rem;">
+    {% for block in section.blocks %}
+      <div style="background:var(--bg-card);border:1px solid var(--border);padding:1.5rem;" {{ block.shopify_attributes }}>
+        <p style="font-family:var(--font-serif);font-size:1rem;color:var(--white);font-style:italic;line-height:1.7;margin-bottom:1rem;">"{{ block.settings.review_text }}"</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <p style="font-family:var(--font-sans);font-size:0.8rem;color:rgba(255,255,255,0.8);font-weight:500;">{{ block.settings.author }}</p>
+            <p style="font-family:var(--font-sans);font-size:0.65rem;color:var(--fg-muted);">{{ block.settings.location }}</p>
+          </div>
+          <span style="font-family:var(--font-sans);font-size:0.6rem;letter-spacing:0.1em;color:var(--glow);text-transform:uppercase;">✓ Verified</span>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Reviews Page",
+  "blocks": [{"type":"review","name":"Review","settings":[
+    {"type":"text","id":"author","label":"Author"},
+    {"type":"text","id":"location","label":"Location"},
+    {"type":"textarea","id":"review_text","label":"Review Text"}
+  ]}],
+  "presets": [{"name":"Reviews Page","blocks":[
+    {"type":"review","settings":{"author":"Sarah M.","location":"New York, USA","review_text":"We've been long distance for 2 years. These bracelets make me feel like he's right here."}},
+    {"type":"review","settings":{"author":"Emma J.","location":"Portland, OR","review_text":"Best gift I've ever given. He literally teared up."}},
+    {"type":"review","settings":{"author":"Alex K.","location":"Toronto, Canada","review_text":"13,000 miles apart but these bracelets close the gap. We never take them off."}}
+  ]}]
+}
+{% endschema %}
