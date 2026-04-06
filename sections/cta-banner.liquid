@@ -1,10 +1,23 @@
 <section class="cta-banner">
   <div class="cta-banner__glow"></div>
   <div class="container" style="position:relative;">
-    <h2 class="cta-banner__title">Make the<br><em>connection</em> real.</h2>
-    <p class="cta-banner__sub">Every bracelet set ships with a handwritten note. Because the details matter.</p>
+    <h2 class="cta-banner__title">{{ section.settings.title_line1 | default: 'Make the' }}<br><em>{{ section.settings.title_line2 | default: 'connection' }}</em> {{ section.settings.title_line3 | default: 'real.' }}</h2>
+    <p class="cta-banner__sub">{{ section.settings.subtitle | default: 'Every bracelet set ships with a handwritten note. Because the details matter.' }}</p>
     <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="btn-primary">{{ section.settings.cta_text | default: 'Shop Now' }}</a>
-    <p class="cta-banner__note">Limited batch — <span>50% off</span> ends soon</p>
+    {% if section.settings.footnote != blank %}<p class="cta-banner__note">{{ section.settings.footnote }}</p>{% endif %}
   </div>
 </section>
-{% schema %}{"name":"CTA Banner","settings":[{"type":"url","id":"cta_url","label":"CTA URL"},{"type":"text","id":"cta_text","label":"CTA Text","default":"Shop Now"}]}{% endschema %}
+{% schema %}
+{
+  "name": "CTA Banner",
+  "settings": [
+    {"type":"text","id":"title_line1","label":"Title Line 1","default":"Make the"},
+    {"type":"text","id":"title_line2","label":"Title Line 2 (red italic)","default":"connection"},
+    {"type":"text","id":"title_line3","label":"Title Line 3","default":"real."},
+    {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Every bracelet set ships with a handwritten note. Because the details matter."},
+    {"type":"text","id":"cta_text","label":"Button Text","default":"Shop Now"},
+    {"type":"url","id":"cta_url","label":"Button URL","default":"/collections/all"},
+    {"type":"text","id":"footnote","label":"Footnote (optional)","default":"Limited batch — 50% off ends soon"}
+  ]
+}
+{% endschema %}
