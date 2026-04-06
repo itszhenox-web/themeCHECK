@@ -1,10 +1,10 @@
-<section style="position:relative;padding:6rem 0 8rem;text-align:center;overflow:hidden;">
-  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:31rem;height:31rem;background:rgba(255,0,0,0.05);border-radius:50%;filter:blur(200px);pointer-events:none;"></div>
+<section class="cta-banner">
+  <div class="cta-banner__glow"></div>
   <div class="container" style="position:relative;">
-    <h2 style="font-family:var(--font-serif);font-size:clamp(2.5rem,7vw,5rem);color:var(--white);line-height:1.1;margin-bottom:1.5rem;">Make the<br><span style="font-style:italic;color:var(--glow);">connection</span> real.</h2>
-    <p style="font-family:var(--font-sans);font-size:0.875rem;color:rgba(209,209,209,0.5);max-width:28rem;margin:0 auto 2.5rem;">Every bracelet set ships with a handwritten note from our team.</p>
-    <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="btn-primary">Shop Now</a>
-    <p style="font-family:var(--font-sans);font-size:0.65rem;color:var(--fg-muted);margin-top:1.5rem;">Limited batch — <span style="color:var(--glow);">50% off</span> ends soon</p>
+    <h2 class="cta-banner__title">Make the<br><em>connection</em> real.</h2>
+    <p class="cta-banner__sub">Every bracelet set ships with a handwritten note. Because the details matter.</p>
+    <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="btn-primary">{{ section.settings.cta_text | default: 'Shop Now' }}</a>
+    <p class="cta-banner__note">Limited batch — <span>50% off</span> ends soon</p>
   </div>
 </section>
-{% schema %}{"name":"CTA Banner","settings":[{"type":"url","id":"cta_url","label":"CTA URL"}]}{% endschema %}
+{% schema %}{"name":"CTA Banner","settings":[{"type":"url","id":"cta_url","label":"CTA URL"},{"type":"text","id":"cta_text","label":"CTA Text","default":"Shop Now"}]}{% endschema %}
