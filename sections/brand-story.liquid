@@ -1,19 +1,14 @@
-<section class="brand-story">
-  <div class="brand-story__bg">
-    {% if section.settings.bg_image != blank %}
-      <img src="{{ section.settings.bg_image | img_url: '1920x' }}" alt="">
-    {% endif %}
-    <div class="brand-story__overlay"></div>
+<section style="position:relative;padding:8rem 0;overflow:hidden;">
+  <div style="position:absolute;inset:0;">
+    {% if section.settings.bg_image != blank %}<img src="{{ section.settings.bg_image | img_url: '1920x' }}" alt="" style="width:100%;height:100%;object-fit:cover;">{% endif %}
+    <div style="position:absolute;inset:0;background:rgba(10,10,10,0.8);"></div>
   </div>
-  <div class="container">
-    <div class="brand-story__content">
-      <p class="eyebrow">— Our Origin</p>
-      <h2 class="brand-story__title">Born from a love<br><em>that refused distance.</em></h2>
-      <p class="brand-story__text">Radioactive Love started with a single truth: love doesn't weaken over distance — it intensifies. Like radiation, it's invisible but undeniable. Every piece we make is a physical manifestation of that invisible bond.</p>
-      <a href="/pages/story" class="brand-story__link">
-        <span class="brand-story__link-line"></span>
-        Read Our Full Story
-      </a>
+  <div class="container" style="position:relative;">
+    <div style="max-width:40rem;margin:0 auto;text-align:center;">
+      <p style="font-family:var(--font-sans);font-size:0.65rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--glow);margin-bottom:2rem;">— Our Origin</p>
+      <h2 style="font-family:var(--font-serif);font-size:clamp(1.75rem,4vw,3rem);color:var(--white);line-height:1.2;margin-bottom:2rem;">Born from a love<br><span style="font-style:italic;color:rgba(209,209,209,0.5);">that refused distance.</span></h2>
+      <p style="font-family:var(--font-sans);font-size:0.875rem;color:rgba(209,209,209,0.5);line-height:1.8;margin-bottom:2.5rem;">Radioactive Love started with a simple truth: love doesn't weaken over distance — it intensifies. Like radiation, it's invisible but undeniable.</p>
+      <a href="/pages/story" style="display:inline-flex;align-items:center;gap:1rem;font-family:var(--font-sans);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);">Read Our Full Story</a>
     </div>
   </div>
 </section>
