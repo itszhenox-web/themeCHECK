@@ -1,25 +1,36 @@
-<section style="position:relative;height:70vh;overflow:hidden;display:flex;align-items:center;">
-  <div style="position:absolute;inset:0;">
-    {% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | img_url: '1920x' }}" alt="" style="width:100%;height:100%;object-fit:cover;">{% else %}<div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0000,#0a0a0a);"></div>{% endif %}
-    <div style="position:absolute;inset:0;background:rgba(10,10,10,0.7);"></div>
+<section class="page-hero">
+  <div class="page-hero__bg">
+    {% if section.settings.hero_image != blank %}
+      <img src="{{ section.settings.hero_image | img_url: '1920x' }}" alt="">
+    {% else %}
+      <div class="page-hero__bg-placeholder"></div>
+    {% endif %}
+    <div class="page-hero__overlay"></div>
   </div>
-  <div class="container" style="position:relative;">
-    <h1 style="font-family:var(--font-serif);font-size:clamp(3rem,8vw,6rem);color:var(--white);">Our Story</h1>
+  <div class="container">
+    <div class="page-hero__content">
+      <p class="eyebrow page-hero__eyebrow">— Our Story</p>
+      <h1 class="page-hero__title">Love is the most<br><em>radioactive force</em><br>in the universe.</h1>
+    </div>
   </div>
 </section>
-<section style="padding:5rem 0 8rem;">
+<section class="page-body">
   <div class="container">
-    <div style="display:grid;gap:3rem;">
-      <div>
-        <p style="font-family:var(--font-sans);font-size:0.9375rem;color:rgba(209,209,209,0.5);line-height:1.9;margin-bottom:1.25rem;">Radioactive Love was born in 2019 from a long-distance relationship between two people who refused to let miles define their love.</p>
-        <p style="font-family:var(--font-sans);font-size:0.9375rem;color:rgba(209,209,209,0.5);line-height:1.9;margin-bottom:1.25rem;">So we made our own.</p>
-        <blockquote style="font-family:var(--font-serif);font-size:1.5rem;color:var(--white);font-style:italic;line-height:1.5;border-left:2px solid var(--glow);padding-left:1.5rem;margin:2.5rem 0;">"Love doesn't weaken over distance — it intensifies. Like radiation, it's invisible but undeniable."</blockquote>
-        <p style="font-family:var(--font-sans);font-size:0.9375rem;color:rgba(209,209,209,0.5);line-height:1.9;">Today, Radioactive Love ships to over 50 countries. Every piece is still made with that original intention.</p>
-      </div>
+    <div class="page-content">
+      <p style="font-family:var(--font-serif);font-size:1.25rem;color:var(--white);line-height:1.6;">It started with a goodbye at an airport gate.</p>
+      <p>Two people, one love, 4,000 miles of ocean between them. The kind of goodbye that hollows you out — where you can still feel the warmth of someone's hand long after they've walked away.</p>
+      <p>That night, staring at the ceiling of a too-quiet apartment, the idea was born: What if there was something physical — something you could touch, hold, feel against your skin — that carried the energy of your person? Not a photo. Not a text. Something alive. Something that glowed.</p>
+      <blockquote>"Radioactive" because real love doesn't fade — it radiates. It changes you at a molecular level.</blockquote>
+      <p>We named it Radioactive Love because that's exactly what true connection is — an invisible, unstoppable energy that permeates everything it touches. It doesn't weaken over distance. It intensifies.</p>
+      <p>Every piece we create is designed to be a conduit for that energy. The Sun and Moon bracelets aren't just matching jewelry — they're two halves of a gravitational field. Wear one, and you carry a piece of your person with you. Always.</p>
+      {% if section.settings.story_image != blank %}
+        <img src="{{ section.settings.story_image | img_url: '1200x' }}" alt="" class="page-section-img">
+      {% endif %}
+      <p>Today, Radioactive Love connects thousands of couples across every continent. From New York to London, from Tokyo to São Paulo — our pieces travel the world, carried by people who refuse to let distance define their love.</p>
     </div>
-    <div style="text-align:center;margin-top:4rem;">
+    <div style="margin-top:4rem;">
       <a href="/collections/all" class="btn-primary">Shop the Collection</a>
     </div>
   </div>
 </section>
-{% schema %}{"name":"Story Page","settings":[{"type":"image_picker","id":"hero_image","label":"Hero Image"}]}{% endschema %}
+{% schema %}{"name":"Story Page","settings":[{"type":"image_picker","id":"hero_image","label":"Hero Image"},{"type":"image_picker","id":"story_image","label":"Body Image"}]}{% endschema %}
