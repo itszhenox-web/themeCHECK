@@ -1,0 +1,16 @@
+{% if section.settings.enabled %}
+<div class="announcement-bar" style="background:{{ section.settings.bg_color }};">
+  <p style="color:{{ section.settings.text_color }};">{{ section.settings.text | default: 'FREE SHIPPING on all orders over $100' }}</p>
+</div>
+{% endif %}
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {"type":"checkbox","id":"enabled","label":"Show announcement bar","default":true},
+    {"type":"text","id":"text","label":"Announcement text","default":"FREE SHIPPING on all orders over $100"},
+    {"type":"color","id":"bg_color","label":"Background color","default":"#ff0000"},
+    {"type":"color","id":"text_color","label":"Text color","default":"#ffffff"}
+  ]
+}
+{% endschema %}
