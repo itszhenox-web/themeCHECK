@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com">
+    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+    <style>
+      :root {
+        --color-background: {{ settings.color_background }};
+        --color-text: {{ settings.color_text }};
+        --color-accent: {{ settings.color_accent }};
+      }
+    </style>
+    {{ content_for_head }}
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-logo"><a href="/">Radioactive Love</a></div>
+        <nav class="header-nav">
+          <ul>
+            <li><a href="/collections/all">Shop</a></li>
+            <li><a href="/pages/about">Story</a></li>
+            <li><a href="/pages/contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <a href="/cart" class="cart-link">Cart <span class="cart-count">{{ cart.item_count }}</span></a>
+        </div>
+      </div>
+    </header>
+    <main>{{ content_for_layout }}</main>
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-section">
+          <h4>Radioactive Love</h4>
+          <p>For love that refuses distance.</p>
+        </div>
+        <div class="footer-section">
+          <h5>Navigate</h5>
+          <ul>
+            <li><a href="/collections/all">Shop</a></li>
+            <li><a href="/pages/about">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="/policies/shipping-policy">Shipping</a></li>
+            <li><a href="/policies/refund-policy">Returns</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h5>Promise</h5>
+          <ul>
+            <li>Free shipping</li>
+            <li>30-day returns</li>
+            <li>Lifetime guarantee</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Radioactive Love. All rights reserved.</p>
+      </div>
+    </footer>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  </body>
+</html>
