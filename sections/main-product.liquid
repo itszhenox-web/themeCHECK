@@ -1,0 +1,141 @@
+<section class="product-page">
+  <div class="container">
+    <p class="product-breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a> /
+      {%- if product.collections.first -%}
+        <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a> /
+      {%- endif -%}
+      {{ product.title }}
+    </p>
+    <div class="product-page-grid">
+      <!-- Media Gallery -->
+      <div class="product-gallery">
+        <div class="product-main-media">
+          {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+          {%- if featured_media -%}
+            <img id="main-product-img" src="{{ featured_media | img_url: '1000x' }}" alt="{{ featured_media.alt | escape }}" loading="eager">
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+        <div class="product-thumbnails">
+          {%- for media in product.media limit: 6 -%}
+            <button class="product-thumb {% if forloop.first %}active{% endif %}" data-src="{{ media | img_url: '1000x' }}" onclick="switchImage(this)">
+              <img src="{{ media | img_url: '150x' }}" alt="{{ media.alt | escape }}">
+            </button>
+          {%- endfor -%}
+        </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        {%- if product.vendor != blank -%}
+          <p class="product-vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+        <h1 class="product-title">{{ product.title }}</h1>
+        {%- if product.metafields.custom.subtitle != blank -%}
+          <p class="product-subtitle">"{{ product.metafields.custom.subtitle }}"</p>
+        {%- endif -%}
+
+        <div class="product-rating">
+          <span class="rating-stars">★★★★★</span>
+          <span class="rating-count">4.9 · {{ section.settings.review_count | default: '2,847' }} reviews</span>
+        </div>
+
+        <div class="product-divider"></div>
+
+        <div class="product-price-wrap">
+          <span class="price-current product-price-main">{{ product.selected_or_first_available_variant.price | money }}</span>
+          {%- if product.compare_at_price > product.price -%}
+            <span class="price-compare">{{ product.compare_at_price | money }}</span>
+            <span class="price-save">
+              Save {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%
+            </span>
+          {%- endif -%}
+        </div>
+
+        <div class="product-divider"></div>
+
+        {%- form 'product', product, id: 'product-form' -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="product-option">
+                <label class="option-label" for="option-{{ option.name | handleize }}">{{ option.name }}</label>
+                <select class="option-select" id="option-{{ option.name | handleize }}" name="options[{{ option.name }}]">
+                  {%- for value in option.values -%}
+                    <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
+
+          <div class="product-qty-row">
+            <div class="qty-wrap">
+              <button type="button" class="qty-btn" id="qty-dec">−</button>
+              <span class="qty-val" id="qty-val">1</span>
+              <button type="button" class="qty-btn" id="qty-inc">+</button>
+              <input type="hidden" name="quantity" id="qty-input" value="1">
+            </div>
+            <button type="submit" name="add" class="btn btn-primary btn-lg btn-add-to-cart"
+              id="add-to-cart-btn"
+              {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+              {%- if product.selected_or_first_available_variant.available -%}
+                Add to Cart
+              {%- else -%}
+                Sold Out
+              {%- endif -%}
+            </button>
+          </div>
+        {%- endform -%}
+
+        <div class="product-urgency">
+          <span class="urgency-dot"></span>
+          <p>{{ section.settings.urgency_text | default: 'Only 12 sets left — order now for next-day dispatch' }}</p>
+        </div>
+
+        <div class="product-trust-row">
+          <div class="product-trust-item">🔒 <span>Secure Checkout</span></div>
+          <div class="product-trust-item">↩ <span>30-Day Returns</span></div>
+          <div class="product-trust-item">✈ <span>Free Shipping</span></div>
+        </div>
+
+        <div class="product-divider"></div>
+
+        {%- if product.description != blank -%}
+          <div class="product-description rte">{{ product.description }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.benefit_1 != blank -%}
+        <div class="product-benefits">
+          <h3 class="benefits-title">Why You'll Love It</h3>
+          <ul>
+            {%- for i in (1..5) -%}
+              {%- assign key = 'benefit_' | append: i -%}
+              {%- if section.settings[key] != blank -%}
+                <li>{{ section.settings[key] }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    {"type":"text","id":"urgency_text","label":"Urgency text","default":"Only 12 sets left — order now for next-day dispatch"},
+    {"type":"text","id":"review_count","label":"Review count","default":"2,847"},
+    {"type":"text","id":"benefit_1","label":"Benefit 1","default":"Set of 2 matching bracelets"},
+    {"type":"text","id":"benefit_2","label":"Benefit 2","default":"Surgical-grade stainless steel — hypoallergenic"},
+    {"type":"text","id":"benefit_3","label":"Benefit 3","default":"100% waterproof — wear it everywhere"},
+    {"type":"text","id":"benefit_4","label":"Benefit 4","default":"Fully adjustable — fits all wrist sizes"},
+    {"type":"text","id":"benefit_5","label":"Benefit 5","default":"Ships in a premium gift box with handwritten note"}
+  ]
+}
+{% endschema %}
