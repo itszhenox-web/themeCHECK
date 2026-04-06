@@ -1,0 +1,59 @@
+<div class="product-page">
+  <div class="product-container">
+    <div class="product-gallery">
+      {% for image in product.images %}
+        <img src="{{ image | img_url: '600x600' }}" alt="{{ image.alt }}" class="product-image">
+      {% endfor %}
+    </div>
+    <div class="product-info">
+      <h1>{{ product.title }}</h1>
+      <div class="product-price">
+        {% if product.compare_at_price > product.price %}
+          <span class="price-compare">{{ product.compare_at_price | money }}</span>
+        {% endif %}
+        <span class="price-current">{{ product.price | money }}</span>
+      </div>
+      <form action="/cart/add" method="post" id="product-form">
+        {% for option in product.options_with_values %}
+          <fieldset>
+            <legend>{{ option.name }}</legend>
+            <select name="options[{{ option.name }}]">
+              {% for value in option.values %}
+                <option value="{{ value }}">{{ value }}</option>
+              {% endfor %}
+            </select>
+          </fieldset>
+        {% endfor %}
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <div class="product-quantity">
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" name="quantity" value="1" min="1">
+        </div>
+        <button type="submit" class="btn btn-primary btn-large">Add to Cart</button>
+      </form>
+      <div class="product-benefits">
+        <div class="benefit">Check: Set of 2 bracelets</div>
+        <div class="benefit">Check: Surgical-grade stainless steel</div>
+        <div class="benefit">Check: 100% waterproof</div>
+        <div class="benefit">Check: Adjustable fit</div>
+        <div class="benefit">Check: Premium gift box</div>
+      </div>
+      <div class="product-description">{{ product.description }}</div>
+      <div class="product-trust">
+        <div class="trust-item">
+          <strong>Free Shipping</strong>
+          <p>Worldwide delivery</p>
+        </div>
+        <div class="trust-item">
+          <strong>30-Day Returns</strong>
+          <p>No questions asked</p>
+        </div>
+        <div class="trust-item">
+          <strong>Secure Checkout</strong>
+          <p>SSL encrypted</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% section 'product-reviews' %}
+</div>
