@@ -1,0 +1,27 @@
+<div style="padding:8rem 0 4rem;text-align:center;">
+  <div class="container">
+    <p style="font-family:var(--font-sans);font-size:0.65rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--glow);margin-bottom:1.5rem;">— The Collection</p>
+    <h1 style="font-family:var(--font-serif);font-size:clamp(2.5rem,6vw,5rem);color:var(--white);margin-bottom:1rem;">{{ collection.title }}</h1>
+    <p style="font-family:var(--font-sans);font-size:0.875rem;color:rgba(209,209,209,0.4);max-width:28rem;margin:0 auto;">{{ collection.description | default: 'Pieces that carry the energy of your connection.' }}</p>
+  </div>
+</div>
+<div class="container">
+  <div class="product-grid">
+    {% for product in collection.products %}
+      <a href="{{ product.url }}" class="product-card">
+        <div class="product-card__img-wrap">
+          {% if product.featured_image %}<img class="product-card__img" src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.featured_image.alt | escape }}">{% endif %}
+          {% if product.compare_at_price > product.price %}<span class="product-card__badge">Sale</span>{% elsif forloop.first %}<span class="product-card__badge">Bestseller</span>{% endif %}
+        </div>
+        <div class="product-card__body">
+          <h3 class="product-card__title">{{ product.title }}</h3>
+          <div style="display:flex;align-items:baseline;gap:0.5rem;margin-top:auto;">
+            <span class="product-card__price-current">{{ product.price | money }}</span>
+            {% if product.compare_at_price > product.price %}<span class="product-card__price-old">{{ product.compare_at_price | money }}</span>{% endif %}
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}{"name":"Collection","settings":[]}{% endschema %}
