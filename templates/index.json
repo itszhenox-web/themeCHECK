@@ -1,34 +1,34 @@
 {
   "sections": {
+    "announcement": {
+      "type": "announcement-bar"
+    },
     "hero": {
       "type": "hero"
     },
     "trust": {
-      "type": "trust-badges"
+      "type": "trust-strip"
     },
-    "featured": {
-      "type": "featured-product"
+    "winner": {
+      "type": "winner-product"
     },
-    "story": {
+    "gallery": {
+      "type": "social-proof-gallery"
+    },
+    "brand_story": {
       "type": "brand-story"
     },
-    "collection_preview": {
-      "type": "collection-preview"
-    },
-    "reviews": {
-      "type": "reviews"
-    },
     "cta": {
-      "type": "final-cta"
+      "type": "cta-banner"
     }
   },
   "order": [
+    "announcement",
     "hero",
     "trust",
-    "featured",
-    "story",
-    "collection_preview",
-    "reviews",
+    "winner",
+    "gallery",
+    "brand_story",
     "cta"
   ]
 }
