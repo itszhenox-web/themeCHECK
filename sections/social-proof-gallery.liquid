@@ -1,17 +1,31 @@
-<section style="padding:6rem 0;overflow:hidden;">
+<section class="gallery">
   <div class="container">
-    <p style="font-family:var(--font-sans);font-size:0.65rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--glow);margin-bottom:1rem;">— Evidence of Love</p>
-    <h2 style="font-family:var(--font-serif);font-size:clamp(1.75rem,4vw,2.5rem);color:var(--white);margin-bottom:3rem;">Real couples. <span style="font-style:italic;color:rgba(209,209,209,0.5);">Real connections.</span></h2>
-    <div style="display:flex;gap:1.5rem;overflow-x:auto;scrollbar-width:none;padding-bottom:1rem;" id="gallery-scroll">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;" class="gallery__header">
+      <div>
+        <p class="eyebrow">— Evidence of Love</p>
+        <h2 class="gallery__title">Real couples. <em>Real connections.</em></h2>
+      </div>
+      <div class="gallery__nav">
+        <button class="gallery__nav-btn gallery__nav-btn--prev" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="gallery__nav-btn gallery__nav-btn--next" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="gallery__scroll" id="gallery-scroll">
       {% for block in section.blocks %}
-        <div style="flex-shrink:0;width:18rem;background:var(--bg-card);border:1px solid rgba(36,36,36,0.5);padding:0.75rem;" {{ block.shopify_attributes }}>
+        <div class="gallery-card" {{ block.shopify_attributes }}>
           {% if block.settings.photo != blank %}
-            <img src="{{ block.settings.photo | img_url: '400x' }}" alt="{{ block.settings.name }}" style="width:100%;aspect-ratio:4/5;object-fit:cover;margin-bottom:1rem;">
+            <img class="gallery-card__img" src="{{ block.settings.photo | img_url: '500x' }}" alt="{{ block.settings.name }}">
+          {% else %}
+            <div class="gallery-card__img-placeholder"></div>
           {% endif %}
-          <p style="font-family:var(--font-serif);font-size:0.875rem;color:var(--white);font-style:italic;line-height:1.6;margin-bottom:0.75rem;">"{{ block.settings.review_text }}"</p>
-          <div style="display:flex;justify-content:space-between;">
-            <span style="font-family:var(--font-sans);font-size:0.75rem;color:rgba(255,255,255,0.8);">{{ block.settings.name }}</span>
-            <span style="font-family:var(--font-sans);font-size:0.65rem;color:var(--fg-muted);">{{ block.settings.location }}</span>
+          <p class="gallery-card__quote">"{{ block.settings.review_text }}"</p>
+          <div class="gallery-card__meta">
+            <span class="gallery-card__name">{{ block.settings.name }}</span>
+            <span class="gallery-card__loc">{{ block.settings.location }}</span>
           </div>
         </div>
       {% endfor %}
@@ -25,12 +39,13 @@
     {"type":"image_picker","id":"photo","label":"Customer Photo"},
     {"type":"text","id":"name","label":"Name","default":"Sarah & Marcus"},
     {"type":"text","id":"location","label":"Location","default":"New York ↔ London"},
-    {"type":"textarea","id":"review_text","label":"Review"}
+    {"type":"textarea","id":"review_text","label":"Review","default":"These bracelets make me feel like he's right here."}
   ]}],
   "presets": [{"name":"Social Proof Gallery","blocks":[
-    {"type":"review","settings":{"name":"Sarah & Marcus","location":"New York ↔ London","review_text":"We've been long distance for 2 years. These bracelets make me feel like he's right here."}},
-    {"type":"review","settings":{"name":"Emma J.","location":"Portland, OR","review_text":"I bought this for my boyfriend's birthday. He literally teared up."}},
-    {"type":"review","settings":{"name":"Alex & Jordan","location":"Toronto ↔ Melbourne","review_text":"13,000 miles apart but these bracelets close the gap."}}
+    {"type":"review","settings":{"name":"Sarah & Marcus","location":"New York ↔ London","review_text":"We've been long distance for 2 years. These bracelets make me feel like he's right here. I look at my wrist and smile every single day."}},
+    {"type":"review","settings":{"name":"Emma J.","location":"Portland, OR","review_text":"I bought this for my boyfriend's birthday. He literally teared up. Best gift I've ever given anyone."}},
+    {"type":"review","settings":{"name":"Alex & Jordan","location":"Toronto ↔ Melbourne","review_text":"13,000 miles apart but these bracelets close the gap. We never take them off."}},
+    {"type":"review","settings":{"name":"Mia R.","location":"Chicago, IL","review_text":"The quality is insane for the price. I shower with it, sleep with it — still looks perfect after 6 months."}}
   ]}]
 }
 {% endschema %}
