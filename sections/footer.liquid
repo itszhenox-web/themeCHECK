@@ -1,34 +1,41 @@
-<footer class="footer">
-  <div class="footer__glow"></div>
-  <div class="container" style="position:relative;">
-    <div class="footer__grid">
-      <div>
-        <p class="footer__brand-name">{{ section.settings.brand_name | default: shop.name }}</p>
-        <p class="footer__tagline">{{ section.settings.tagline | default: 'For the love that transcends distance.' }}</p>
+<footer class="site-footer">
+  <div class="footer-glow"></div>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3 class="footer-brand-name">{{ section.settings.brand_name | default: shop.name }}</h3>
+        <p class="footer-tagline">{{ section.settings.tagline | default: 'For love that refuses distance.' }}</p>
       </div>
       <div>
-        <p class="footer__col-title">{{ section.settings.nav_col_title | default: 'Navigate' }}</p>
-        <div class="footer__links">
-          {% if section.settings.nav_link_1_label != blank %}<a href="{{ section.settings.nav_link_1_url }}">{{ section.settings.nav_link_1_label }}</a>{% endif %}
-          {% if section.settings.nav_link_2_label != blank %}<a href="{{ section.settings.nav_link_2_url }}">{{ section.settings.nav_link_2_label }}</a>{% endif %}
-          {% if section.settings.nav_link_3_label != blank %}<a href="{{ section.settings.nav_link_3_url }}">{{ section.settings.nav_link_3_label }}</a>{% endif %}
-          {% if section.settings.nav_link_4_label != blank %}<a href="{{ section.settings.nav_link_4_url }}">{{ section.settings.nav_link_4_label }}</a>{% endif %}
-          {% if section.settings.nav_link_5_label != blank %}<a href="{{ section.settings.nav_link_5_url }}">{{ section.settings.nav_link_5_label }}</a>{% endif %}
-        </div>
+        <h4 class="footer-col-title">Navigate</h4>
+        <ul class="footer-links">
+          <li><a href="{{ routes.root_url }}">Home</a></li>
+          <li><a href="{{ routes.collections_url }}">Shop</a></li>
+          <li><a href="/pages/about">Our Story</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+        </ul>
       </div>
       <div>
-        <p class="footer__col-title">{{ section.settings.promise_col_title | default: 'Our Promise' }}</p>
-        <div class="footer__promise">
-          {% if section.settings.promise_1 != blank %}<span>{{ section.settings.promise_1 }}</span>{% endif %}
-          {% if section.settings.promise_2 != blank %}<span>{{ section.settings.promise_2 }}</span>{% endif %}
-          {% if section.settings.promise_3 != blank %}<span>{{ section.settings.promise_3 }}</span>{% endif %}
-          {% if section.settings.promise_4 != blank %}<span>{{ section.settings.promise_4 }}</span>{% endif %}
-        </div>
+        <h4 class="footer-col-title">Support</h4>
+        <ul class="footer-links">
+          <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
+          <li><a href="/policies/refund-policy">Refund Policy</a></li>
+          <li><a href="/pages/contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Our Promise</h4>
+        <ul class="footer-links no-link">
+          <li>Free worldwide shipping</li>
+          <li>30-day returns</li>
+          <li>Lifetime quality guarantee</li>
+          <li>Ships within 24 hours</li>
+        </ul>
       </div>
     </div>
-    <div class="footer__bottom">
-      <p class="footer__copy">{{ section.settings.copyright | default: '© 2025 Radioactive Love. All rights reserved.' }}</p>
-      <p class="footer__copy">{{ section.settings.tagline_bottom | default: 'Made with ♥ for long-distance love' }}</p>
+    <div class="footer-bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      <p>Made with ♥ for long-distance love</p>
     </div>
   </div>
 </footer>
@@ -36,30 +43,8 @@
 {
   "name": "Footer",
   "settings": [
-    {"type":"header","content":"Brand"},
-    {"type":"text","id":"brand_name","label":"Brand name","default":"Radioactive Love"},
-    {"type":"textarea","id":"tagline","label":"Brand tagline","default":"For the love that transcends distance."},
-    {"type":"header","content":"Navigation Column"},
-    {"type":"text","id":"nav_col_title","label":"Column title","default":"Navigate"},
-    {"type":"text","id":"nav_link_1_label","label":"Link 1 Label","default":"Home"},
-    {"type":"url","id":"nav_link_1_url","label":"Link 1 URL","default":"/"},
-    {"type":"text","id":"nav_link_2_label","label":"Link 2 Label","default":"All Products"},
-    {"type":"url","id":"nav_link_2_url","label":"Link 2 URL","default":"/collections/all"},
-    {"type":"text","id":"nav_link_3_label","label":"Link 3 Label","default":"Mini Gifts & Charms"},
-    {"type":"url","id":"nav_link_3_url","label":"Link 3 URL","default":"/collections/mini-gifts-charms"},
-    {"type":"text","id":"nav_link_4_label","label":"Link 4 Label","default":"Jewelry & Accessories"},
-    {"type":"url","id":"nav_link_4_url","label":"Link 4 URL","default":"/collections/jewelry-accessories"},
-    {"type":"text","id":"nav_link_5_label","label":"Link 5 Label","default":"Our Story"},
-    {"type":"url","id":"nav_link_5_url","label":"Link 5 URL","default":"/pages/story"},
-    {"type":"header","content":"Promise Column"},
-    {"type":"text","id":"promise_col_title","label":"Column title","default":"Our Promise"},
-    {"type":"text","id":"promise_1","label":"Promise 1","default":"Free worldwide shipping"},
-    {"type":"text","id":"promise_2","label":"Promise 2","default":"30-day returns"},
-    {"type":"text","id":"promise_3","label":"Promise 3","default":"Secure checkout"},
-    {"type":"text","id":"promise_4","label":"Promise 4","default":"Ships in 24 hours"},
-    {"type":"header","content":"Bottom Bar"},
-    {"type":"text","id":"copyright","label":"Copyright text","default":"© 2025 Radioactive Love. All rights reserved."},
-    {"type":"text","id":"tagline_bottom","label":"Bottom tagline","default":"Made with ♥ for long-distance love"}
+    {"type":"text","id":"brand_name","label":"Brand name"},
+    {"type":"textarea","id":"tagline","label":"Tagline","default":"For love that refuses distance."}
   ]
 }
 {% endschema %}
