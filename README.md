@@ -1,14 +1,20 @@
-# Radioactive Love — Shopify Theme
+# Radioactive Love — Shopify Theme v2.0
 
-## Installation via Shopify GitHub Integration
+Dark, editorial Shopify theme. Playfair Display + Inter. Red glow accent. Product-focused.
 
-1. Connect this repo to Shopify: **Online Store → Themes → Add theme → Connect from GitHub**
-2. Select this repository and the main branch
-3. Click Customize to add your images and edit text
+## Setup
+
+1. Connect this repo: **Shopify Admin → Online Store → Themes → Add theme → Connect from GitHub**
+2. Select repo + main branch → click Customize
+3. Add hero image, product images, review photos in Theme Customizer
 
 ## Pages to Create
 
-In Shopify Admin → Online Store → Pages, create:
-- Handle: `story` → template: page.story
-- Handle: `reviews` → template: page.reviews  
-- Handle: `policies` → template: page.policies
+**Online Store → Pages → Add page:**
+- Title: Story · Handle: `story` · Template: page.story
+- Title: Reviews · Handle: `reviews` · Template: page.reviews
+- Title: Policies · Handle: `policies` · Template: page.policies
+
+## Navbar Links
+
+The navbar links to /collections/all for Shop. Update to your specific collection handles if needed.
