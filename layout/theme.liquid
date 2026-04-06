@@ -13,6 +13,7 @@
   {{ 'theme.css' | asset_url | stylesheet_tag }}
 </head>
 <body class="bg-dark text-light">
+  {% section 'announcement-bar' %}
   {% section 'navbar' %}
   <main id="main-content">{{ content_for_layout }}</main>
   {% section 'footer' %}
