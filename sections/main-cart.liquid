@@ -1,0 +1,28 @@
+<div class="container page-body">
+  <h1 style="font-family:var(--font-serif);color:#fff;margin-bottom:2rem;">Your Cart</h1>
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty-page">
+      <p>Your cart is empty.</p>
+      <a href="{{ routes.collections_url }}" class="btn btn-primary">Continue Shopping</a>
+    </div>
+  {%- else -%}
+    {%- for item in cart.items -%}
+      <div class="cart-page-item">
+        <img src="{{ item.image | img_url: '150x' }}" alt="{{ item.title }}">
+        <div class="cart-page-item-info">
+          <p class="cart-page-item-title">{{ item.product.title }}</p>
+          {%- unless item.variant.title == 'Default Title' -%}
+            <p class="cart-page-item-variant">{{ item.variant.title }}</p>
+          {%- endunless -%}
+          <p class="cart-page-item-price">{{ item.final_price | money }} × {{ item.quantity }}</p>
+        </div>
+        <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="cart-page-item-remove">Remove</a>
+      </div>
+    {%- endfor -%}
+    <div class="cart-page-footer">
+      <p class="cart-page-total">Subtotal: <strong>{{ cart.total_price | money }}</strong></p>
+      <a href="{{ routes.checkout_url }}" class="btn btn-primary btn-lg">Checkout</a>
+    </div>
+  {%- endif -%}
+</div>
+{% schema %}{"name":"Cart","settings":[]}{% endschema %}
