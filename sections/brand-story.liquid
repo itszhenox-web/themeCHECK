@@ -7,14 +7,27 @@
   </div>
   <div class="container">
     <div class="brand-story__content">
-      <p class="eyebrow">— Our Origin</p>
-      <h2 class="brand-story__title">Born from a love<br><em>that refused distance.</em></h2>
-      <p class="brand-story__text">Radioactive Love started with a single truth: love doesn't weaken over distance — it intensifies. Like radiation, it's invisible but undeniable. Every piece we make is a physical manifestation of that invisible bond.</p>
-      <a href="/pages/story" class="brand-story__link">
+      <p class="eyebrow">{{ section.settings.eyebrow | default: '— Our Origin' }}</p>
+      <h2 class="brand-story__title">{{ section.settings.title_line1 | default: 'Born from a love' }}<br><em>{{ section.settings.title_line2 | default: 'that refused distance.' }}</em></h2>
+      <p class="brand-story__text">{{ section.settings.body_text | default: 'Radioactive Love started with a single truth: love doesn't weaken over distance — it intensifies.' }}</p>
+      <a href="{{ section.settings.link_url | default: '/pages/story' }}" class="brand-story__link">
         <span class="brand-story__link-line"></span>
-        Read Our Full Story
+        {{ section.settings.link_label | default: 'Read Our Full Story' }}
       </a>
     </div>
   </div>
 </section>
-{% schema %}{"name":"Brand Story","settings":[{"type":"image_picker","id":"bg_image","label":"Background Image"}]}{% endschema %}
+{% schema %}
+{
+  "name": "Brand Story",
+  "settings": [
+    {"type":"image_picker","id":"bg_image","label":"Background Image"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"— Our Origin"},
+    {"type":"text","id":"title_line1","label":"Title Line 1","default":"Born from a love"},
+    {"type":"text","id":"title_line2","label":"Title Line 2 (italic)","default":"that refused distance."},
+    {"type":"textarea","id":"body_text","label":"Body Text","default":"Radioactive Love started with a single truth: love doesn't weaken over distance — it intensifies."},
+    {"type":"text","id":"link_label","label":"Link Text","default":"Read Our Full Story"},
+    {"type":"url","id":"link_url","label":"Link URL","default":"/pages/story"}
+  ]
+}
+{% endschema %}
