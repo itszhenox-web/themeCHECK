@@ -1,27 +1,11 @@
 <section class="final-cta">
-  <div class="final-cta-glow"></div>
-  <div class="container">
-    <p class="eyebrow">{{ section.settings.eyebrow | default: '— Don't Wait Another Day' }}</p>
-    <h2 class="final-cta-title">{{ section.settings.title | default: 'Make the connection real.' }}</h2>
-    <p class="final-cta-sub">{{ section.settings.subtitle | default: 'Every set ships with a handwritten note. Because the details matter.' }}</p>
-    <a href="{{ section.settings.cta_url | default: routes.collections_url }}" class="btn btn-primary btn-lg">
-      {{ section.settings.cta_text | default: 'Shop Now — 50% Off Today' }}
-    </a>
-    {%- if section.settings.footnote != blank -%}
-      <p class="final-cta-note">{{ section.settings.footnote }}</p>
-    {%- endif -%}
-  </div>
+  <h2>Join Thousands of Connected Couples</h2>
+  <p>Experience the power of staying close, no matter the distance.</p>
+  <a href="/collections/all" class="btn btn-primary btn-large">Shop the Collection</a>
 </section>
+
 {% schema %}
 {
-  "name": "Final CTA",
-  "settings": [
-    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"— Don't Wait Another Day"},
-    {"type":"text","id":"title","label":"Title","default":"Make the connection real."},
-    {"type":"textarea","id":"subtitle","label":"Subtitle"},
-    {"type":"text","id":"cta_text","label":"CTA button text","default":"Shop Now — 50% Off Today"},
-    {"type":"url","id":"cta_url","label":"CTA URL"},
-    {"type":"text","id":"footnote","label":"Footnote","default":"Free shipping · 30-day returns · Limited stock"}
-  ]
+  "name": "Final CTA"
 }
 {% endschema %}
