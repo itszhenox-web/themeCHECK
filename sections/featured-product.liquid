@@ -1,0 +1,71 @@
+{%- assign fp = all_products[section.settings.product] -%}
+{%- if fp == empty -%}{%- assign fp = collections.all.products.first -%}{%- endif -%}
+<section class="featured-product-section">
+  <div class="container">
+    <div class="featured-product-grid">
+      <div class="featured-product-media">
+        {%- if fp != empty -%}
+          <img src="{{ fp.featured_image | img_url: '900x' }}" alt="{{ fp.featured_image.alt | escape }}" loading="lazy">
+          {%- if fp.compare_at_price > fp.price -%}
+            <span class="featured-badge">{{ section.settings.badge_text | default: 'Bestseller' }}</span>
+          {%- endif -%}
+        {%- else -%}
+          <div class="featured-placeholder"></div>
+        {%- endif -%}
+      </div>
+      <div class="featured-product-info">
+        <p class="eyebrow">{{ section.settings.eyebrow | default: '— Most Loved' }}</p>
+        {%- if fp != empty -%}
+          <h2 class="featured-title">{{ fp.title }}</h2>
+          {%- if fp.metafields.custom.subtitle != blank -%}
+            <p class="featured-subtitle">"{{ fp.metafields.custom.subtitle }}"</p>
+          {%- else -%}
+            <p class="featured-subtitle">"{{ section.settings.product_tagline | default: 'A reminder of your person, every single day.' }}"</p>
+          {%- endif -%}
+          <div class="featured-stars">★★★★★ <span>4.9 · 2,800+ reviews</span></div>
+          <div class="featured-price">
+            <span class="price-current">{{ fp.price | money }}</span>
+            {%- if fp.compare_at_price > fp.price -%}
+              <span class="price-compare">{{ fp.compare_at_price | money }}</span>
+              <span class="price-save">Save {{ fp.compare_at_price | minus: fp.price | times: 100 | divided_by: fp.compare_at_price }}%</span>
+            {%- endif -%}
+          </div>
+          <ul class="featured-benefits">
+            {%- for i in (1..4) -%}
+              {%- assign benefit_key = 'benefit_' | append: i -%}
+              {%- if section.settings[benefit_key] != blank -%}
+                <li>{{ section.settings[benefit_key] }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+          <div class="featured-urgency">
+            <span class="urgency-dot"></span>
+            <p>{{ section.settings.urgency_text | default: 'Only 12 sets left — ships within 24 hours' }}</p>
+          </div>
+          <a href="{{ fp.url }}" class="btn btn-primary btn-lg">{{ section.settings.cta_text | default: 'Get Yours Now' }}</a>
+        {%- else -%}
+          <h2 class="featured-title">{{ section.settings.fallback_title | default: 'Sun & Moon Connection Set' }}</h2>
+          <a href="{{ routes.collections_url }}" class="btn btn-primary btn-lg">Shop Now</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Featured Product",
+  "settings": [
+    {"type":"product","id":"product","label":"Featured product"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"— Most Loved"},
+    {"type":"text","id":"product_tagline","label":"Product tagline","default":"A reminder of your person, every single day."},
+    {"type":"text","id":"badge_text","label":"Badge text","default":"Bestseller"},
+    {"type":"text","id":"urgency_text","label":"Urgency text","default":"Only 12 sets left — ships within 24 hours"},
+    {"type":"text","id":"cta_text","label":"CTA text","default":"Get Yours Now"},
+    {"type":"text","id":"benefit_1","label":"Benefit 1","default":"Set of 2 bracelets (Sun & Moon)"},
+    {"type":"text","id":"benefit_2","label":"Benefit 2","default":"Surgical-grade steel · 100% waterproof"},
+    {"type":"text","id":"benefit_3","label":"Benefit 3","default":"Adjustable — fits all wrist sizes"},
+    {"type":"text","id":"benefit_4","label":"Benefit 4","default":"Ships in a premium gift box"},
+    {"type":"text","id":"fallback_title","label":"Fallback title (no product selected)","default":"Sun & Moon Connection Set"}
+  ]
+}
+{% endschema %}
