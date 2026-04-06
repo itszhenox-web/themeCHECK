@@ -1,0 +1,50 @@
+<div class="collection-header">
+  <div class="container">
+    <p class="eyebrow">— Shop</p>
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p class="collection-desc">{{ collection.description }}</p>
+    {%- endif -%}
+  </div>
+</div>
+<div class="container">
+  {%- if collection.products_count == 0 -%}
+    <div class="collection-empty">
+      <p>No products found in this collection.</p>
+      <a href="{{ routes.collections_url }}" class="btn btn-primary">Browse All</a>
+    </div>
+  {%- else -%}
+    <div class="product-grid collection-grid">
+      {%- for product in collection.products -%}
+        <a href="{{ product.url }}" class="product-card">
+          <div class="product-card-media">
+            {%- if product.featured_image -%}
+              <img src="{{ product.featured_image | img_url: '700x' }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy">
+            {%- else -%}
+              <div class="product-card-placeholder"></div>
+            {%- endif -%}
+            {%- if product.compare_at_price > product.price -%}
+              <span class="product-badge">Sale</span>
+            {%- endif -%}
+          </div>
+          <div class="product-card-body">
+            {%- if product.vendor != blank -%}<p class="product-vendor">{{ product.vendor }}</p>{%- endif -%}
+            <h3 class="product-title">{{ product.title }}</h3>
+            <div class="product-price">
+              <span class="price-current">{{ product.price | money }}</span>
+              {%- if product.compare_at_price > product.price -%}
+                <span class="price-compare">{{ product.compare_at_price | money }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <div class="pagination">
+        {{ paginate | default_pagination }}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+{% schema %}{"name":"Collection","settings":[]}{% endschema %}
