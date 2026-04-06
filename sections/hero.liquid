@@ -1,42 +1,48 @@
 <section class="hero">
-  <div class="hero__bg">
-    {% if section.settings.hero_image != blank %}
-      <img src="{{ section.settings.hero_image | img_url: '1920x' }}" alt="Hero" loading="eager">
-    {% else %}
-      <div class="hero__bg-placeholder"></div>
-    {% endif %}
-    <div class="hero__overlay"></div>
+  <div class="hero-bg">
+    {%- if section.settings.hero_image != blank -%}
+      <img src="{{ section.settings.hero_image | img_url: '2000x' }}" alt="Hero" loading="eager" fetchpriority="high">
+    {%- else -%}
+      <div class="hero-bg-fallback"></div>
+    {%- endif -%}
+    <div class="hero-overlay"></div>
   </div>
-  <div class="hero__glow"></div>
-  <div class="hero__content container">
-    <div style="max-width:42rem;">
-      <p class="eyebrow hero__eyebrow">{{ section.settings.eyebrow | default: '— The long-distance connection bracelet' }}</p>
-      <h1 class="hero__title">
-        {{ section.settings.headline_line1 | default: 'Distance' }}<br>
-        <em>{{ section.settings.headline_line2 | default: 'is a Myth.' }}</em>
-      </h1>
-      <p class="hero__subtitle">{{ section.settings.subtitle | default: 'Every piece carries the invisible energy of your connection. Worn by thousands across every continent.' }}</p>
-      <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="hero__cta">
-        <span class="hero__cta-line"></span>
-        {{ section.settings.cta_text | default: 'Discover the Bond' }}
-      </a>
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-content">
+      <p class="eyebrow">{{ section.settings.eyebrow | default: '— The Connection Bracelet' }}</p>
+      <h1 class="hero-title">{{ section.settings.headline | default: 'Stay Connected,<br><em>No Matter the Distance.</em>' }}</h1>
+      <p class="hero-sub">{{ section.settings.subheadline | default: 'A meaningful bracelet that keeps you close, even when you're apart. Worn by 50,000+ couples worldwide.' }}</p>
+      <div class="hero-actions">
+        <a href="{{ section.settings.cta_url | default: routes.collections_url }}" class="btn btn-primary btn-lg">
+          {{ section.settings.cta_text | default: 'Shop the Collection' }}
+        </a>
+        {%- if section.settings.secondary_cta_text != blank -%}
+        <a href="{{ section.settings.secondary_cta_url | default: '#story' }}" class="btn btn-ghost">
+          {{ section.settings.secondary_cta_text }}
+        </a>
+        {%- endif -%}
+      </div>
+      <div class="hero-social-proof">
+        <div class="hero-stars">★★★★★</div>
+        <span>Loved by <strong>50,000+</strong> couples</span>
+      </div>
     </div>
   </div>
-  <div class="hero__scroll">
-    <div class="hero__scroll-dot"></div>
-  </div>
+  <div class="hero-scroll-cue"><div class="hero-scroll-line"></div></div>
 </section>
 {% schema %}
 {
   "name": "Hero",
   "settings": [
-    {"type":"image_picker","id":"hero_image","label":"Hero Image"},
-    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"— The long-distance connection bracelet"},
-    {"type":"text","id":"headline_line1","label":"Headline Line 1","default":"Distance"},
-    {"type":"text","id":"headline_line2","label":"Headline Line 2 (italic)","default":"is a Myth."},
-    {"type":"textarea","id":"subtitle","label":"Subtitle"},
-    {"type":"text","id":"cta_text","label":"CTA Text","default":"Discover the Bond"},
-    {"type":"url","id":"cta_url","label":"CTA URL"}
+    {"type":"image_picker","id":"hero_image","label":"Hero background image"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow text","default":"— The Connection Bracelet"},
+    {"type":"text","id":"headline","label":"Headline","default":"Stay Connected, No Matter the Distance."},
+    {"type":"textarea","id":"subheadline","label":"Subheadline","default":"A meaningful bracelet that keeps you close, even when you're apart."},
+    {"type":"text","id":"cta_text","label":"Primary CTA text","default":"Shop the Collection"},
+    {"type":"url","id":"cta_url","label":"Primary CTA URL"},
+    {"type":"text","id":"secondary_cta_text","label":"Secondary CTA text"},
+    {"type":"url","id":"secondary_cta_url","label":"Secondary CTA URL"}
   ]
 }
 {% endschema %}
