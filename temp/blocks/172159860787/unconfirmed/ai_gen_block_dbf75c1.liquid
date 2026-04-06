@@ -1,6 +1,351 @@
+{% doc %}
+  @prompt
+    sort products
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-sort-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-product-sort__container-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: {{ block.settings.alignment }};
+    gap: 12px;
+    padding: {{ block.settings.padding }}px 0;
+  }
+
+  .ai-product-sort__label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.label_size }}px;
+    color: {{ block.settings.label_color }};
+    font-weight: {{ block.settings.label_weight }};
+    white-space: nowrap;
+  }
+
+  .ai-product-sort__select-{{ ai_gen_id }} {
+    padding: 12px 40px 12px 16px;
+    font-size: {{ block.settings.select_size }}px;
+    color: {{ block.settings.select_text_color }};
+    background-color: {{ block.settings.select_bg_color }};
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='{{ block.settings.select_text_color | remove: '#' }}' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    min-width: 200px;
+  }
+
+  .ai-product-sort__select-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.border_hover_color }};
+  }
+
+  .ai-product-sort__select-{{ ai_gen_id }}:focus {
+    outline: 2px solid {{ block.settings.border_hover_color }};
+    outline-offset: 2px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-sort__container-{{ ai_gen_id }} {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .ai-product-sort__select-{{ ai_gen_id }} {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+{% endstyle %}
+
+<product-sort-{{ ai_gen_id }} class="ai-product-sort-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-product-sort__container-{{ ai_gen_id }}">
+    {% if block.settings.show_label %}
+      <label for="ai-sort-select-{{ ai_gen_id }}" class="ai-product-sort__label-{{ ai_gen_id }}">
+        {{ block.settings.label_text }}
+      </label>
+    {% endif %}
+    
+    <select 
+      id="ai-sort-select-{{ ai_gen_id }}" 
+      class="ai-product-sort__select-{{ ai_gen_id }}"
+      aria-label="Sort products"
+    >
+      <option value="manual">{{ block.settings.option_featured }}</option>
+      <option value="best-selling">{{ block.settings.option_best_selling }}</option>
+      <option value="title-ascending">{{ block.settings.option_az }}</option>
+      <option value="title-descending">{{ block.settings.option_za }}</option>
+      <option value="price-ascending">{{ block.settings.option_price_low }}</option>
+      <option value="price-descending">{{ block.settings.option_price_high }}</option>
+      <option value="created-ascending">{{ block.settings.option_date_old }}</option>
+      <option value="created-descending">{{ block.settings.option_date_new }}</option>
+    </select>
+  </div>
+</product-sort-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductSort{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.select = this.querySelector('.ai-product-sort__select-{{ ai_gen_id }}');
+        this.setInitialValue();
+        this.select.addEventListener('change', this.onSortChange.bind(this));
+      }
+
+      setInitialValue() {
+        const params = new URLSearchParams(window.location.search);
+        const currentSort = params.get('sort_by');
+        if (currentSort) {
+          this.select.value = currentSort;
+        }
+      }
+
+      onSortChange(event) {
+        const sortValue = event.target.value;
+        const url = new URL(window.location.href);
+        
+        if (sortValue === 'manual') {
+          url.searchParams.delete('sort_by');
+        } else {
+          url.searchParams.set('sort_by', sortValue);
+        }
+        
+        window.location.href = url.toString();
+      }
+    }
+
+    customElements.define('product-sort-{{ ai_gen_id }}', ProductSort{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Product sort",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Vertical padding",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_label",
+      "label": "Show label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Label text",
+      "default": "Sort by:"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "label_weight",
+      "label": "Label weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Dropdown"
+    },
+    {
+      "type": "range",
+      "id": "select_size",
+      "label": "Text size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "select_text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "select_bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "border_hover_color",
+      "label": "Border hover color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Sort options"
+    },
+    {
+      "type": "text",
+      "id": "option_featured",
+      "label": "Featured",
+      "default": "Featured"
+    },
+    {
+      "type": "text",
+      "id": "option_best_selling",
+      "label": "Best selling",
+      "default": "Best selling"
+    },
+    {
+      "type": "text",
+      "id": "option_az",
+      "label": "Alphabetically A-Z",
+      "default": "Alphabetically, A-Z"
+    },
+    {
+      "type": "text",
+      "id": "option_za",
+      "label": "Alphabetically Z-A",
+      "default": "Alphabetically, Z-A"
+    },
+    {
+      "type": "text",
+      "id": "option_price_low",
+      "label": "Price low to high",
+      "default": "Price, low to high"
+    },
+    {
+      "type": "text",
+      "id": "option_price_high",
+      "label": "Price high to low",
+      "default": "Price, high to low"
+    },
+    {
+      "type": "text",
+      "id": "option_date_old",
+      "label": "Date old to new",
+      "default": "Date, old to new"
+    },
+    {
+      "type": "text",
+      "id": "option_date_new",
+      "label": "Date new to old",
+      "default": "Date, new to old"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product sort"
+    }
+  ]
+}
 {% endschema %}
