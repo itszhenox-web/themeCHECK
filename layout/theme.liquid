@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>
+    {%- if request.page_type == 'index' -%}{{ shop.name }} — {{ shop.description | default: 'Feel the Connection' }}
+    {%- else -%}{{ page_title }} | {{ shop.name }}{%- endif -%}
+  </title>
+  {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  {{ content_for_header }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+</head>
+<body class="{% if request.page_type == 'index' %}page-home{% endif %}">
+  {%- sections 'header-group' -%}
+  <main id="main-content" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+  {%- sections 'footer-group' -%}
+  <div id="cart-overlay" class="cart-overlay" aria-hidden="true"></div>
+  <div id="cart-drawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-drawer__header">
+      <h2 class="cart-drawer__title">Your Cart</h2>
+      <button class="cart-drawer__close" id="cart-drawer-close" aria-label="Close cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-drawer__body" id="cart-drawer-body">
+      <div class="cart-empty" id="cart-empty">
+        <p>Your cart is empty</p>
+        <a href="/collections/all" class="btn btn-primary">Shop Now</a>
+      </div>
+      <div class="cart-items" id="cart-items"></div>
+    </div>
+    <div class="cart-drawer__footer" id="cart-drawer-footer" style="display:none;">
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <span id="cart-subtotal-price"></span>
+      </div>
+      <a href="/checkout" class="btn btn-primary btn-full">Checkout</a>
+      <p class="cart-drawer__note">Free shipping on all orders</p>
+    </div>
+  </div>
+  {{ 'theme.js' | asset_url | script_tag }}
+</body>
+</html>
