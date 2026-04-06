@@ -1,8 +1,42 @@
 <section class="hero">
-  <div class="hero-content">
-    <h1>Stay Connected, No Matter the Distance</h1>
-    <p>A meaningful bracelet that keeps you close, even when apart</p>
-    <a href="/collections/all" class="btn btn-primary btn-large">Explore Now</a>
+  <div class="hero__bg">
+    {% if section.settings.hero_image != blank %}
+      <img src="{{ section.settings.hero_image | img_url: '1920x' }}" alt="Hero" loading="eager">
+    {% else %}
+      <div class="hero__bg-placeholder"></div>
+    {% endif %}
+    <div class="hero__overlay"></div>
+  </div>
+  <div class="hero__glow"></div>
+  <div class="hero__content container">
+    <div style="max-width:42rem;">
+      <p class="eyebrow hero__eyebrow">{{ section.settings.eyebrow | default: '— The long-distance connection bracelet' }}</p>
+      <h1 class="hero__title">
+        {{ section.settings.headline_line1 | default: 'Distance' }}<br>
+        <em>{{ section.settings.headline_line2 | default: 'is a Myth.' }}</em>
+      </h1>
+      <p class="hero__subtitle">{{ section.settings.subtitle | default: 'Every piece carries the invisible energy of your connection. Worn by thousands across every continent.' }}</p>
+      <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="hero__cta">
+        <span class="hero__cta-line"></span>
+        {{ section.settings.cta_text | default: 'Discover the Bond' }}
+      </a>
+    </div>
+  </div>
+  <div class="hero__scroll">
+    <div class="hero__scroll-dot"></div>
   </div>
 </section>
-{% schema %}{"name":"Hero"}{% endschema %}
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {"type":"image_picker","id":"hero_image","label":"Hero Image"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"— The long-distance connection bracelet"},
+    {"type":"text","id":"headline_line1","label":"Headline Line 1","default":"Distance"},
+    {"type":"text","id":"headline_line2","label":"Headline Line 2 (italic)","default":"is a Myth."},
+    {"type":"textarea","id":"subtitle","label":"Subtitle"},
+    {"type":"text","id":"cta_text","label":"CTA Text","default":"Discover the Bond"},
+    {"type":"url","id":"cta_url","label":"CTA URL"}
+  ]
+}
+{% endschema %}
